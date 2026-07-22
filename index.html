@@ -1,80 +1,279 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>GeoBR Demon List</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoBR • Demon List</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-color: #f4f5f7;
+            --nav-bg: #ffffff;
+            --card-bg: #ffffff;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --accent-blue: #0284c7;
+            --border-color: #e2e8f0;
+        }
 
-  <!-- Estilo do site (arquivo separado, fácil de editar) -->
-  <link rel="stylesheet" href="style.css" />
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-color: #0f172a;
+                --nav-bg: #1e293b;
+                --card-bg: #1e293b;
+                --text-main: #f8fafc;
+                --text-muted: #94a3b8;
+                --border-color: #334155;
+            }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        header {
+            background-color: var(--nav-bg);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 20px;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.2rem;
+            letter-spacing: -0.5px;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--text-main);
+        }
+
+        nav {
+            display: flex;
+            gap: 15px;
+        }
+
+        nav button {
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 6px 10px;
+            transition: color 0.2s ease;
+        }
+
+        nav button:hover, nav button.active {
+            color: var(--accent-blue);
+        }
+
+        main {
+            max-width: 900px;
+            margin: 30px auto 0 auto;
+            padding: 0 15px;
+        }
+
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--border-color);
+            background-color: var(--card-bg);
+            color: var(--text-main);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            outline: none;
+            margin-bottom: 10px;
+        }
+
+        .search-bar:focus {
+            border-color: var(--accent-blue);
+        }
+
+        .level-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 12px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .level-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+        }
+
+        .thumb-container {
+            width: 160px;
+            height: 90px;
+            background-color: #000;
+            border-radius: 6px;
+            overflow: hidden;
+            flex-shrink: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .thumb-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .no-thumb {
+            color: #64748b;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .level-details {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .level-title {
+            font-size: 1.15rem;
+            font-weight: 800;
+        }
+
+        .level-author {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        .level-author strong {
+            color: var(--text-main);
+        }
+
+        .level-points {
+            font-size: 0.75rem;
+            color: var(--accent-blue);
+            font-weight: 700;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 600px) {
+            .header-container { flex-direction: column; gap: 10px; }
+            .level-card { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .thumb-container { width: 100%; height: 160px; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- ===================== CABEÇALHO ===================== -->
-  <header class="site-header">
-    <h1>Geo<span class="highlight">BR</span> Demon List</h1>
-    <p class="subtitle">A lista oficial de demons do servidor GeoBR</p>
-  </header>
+    <header>
+        <div class="header-container">
+            <div class="logo">GEOBR <span>DEMONLIST</span></div>
+            <nav>
+                <button class="active" onclick="switchTab('main', this)">Main List</button>
+                <button onclick="switchTab('extended', this)">Extended</button>
+                <button onclick="switchTab('legacy', this)">Legacy</button>
+            </nav>
+        </div>
+    </header>
 
-  <!-- ===================== LAYOUT DE 3 COLUNAS ===================== -->
-  <div class="container">
+    <main>
+        <input type="text" id="searchInput" class="search-bar" placeholder="Pesquisar fase ou criador..." oninput="filterLevels()">
 
-    <!-- ---------- COLUNA ESQUERDA: menu rápido de níveis ---------- -->
-    <aside class="sidebar-left">
-      <h2>Niveis</h2>
-      <ul id="levelMenu" class="level-menu">
-        <!-- Preenchido automaticamente pelo script.js -->
-      </ul>
-    </aside>
-
-    <!-- ---------- COLUNA CENTRAL: abas + conteudo ---------- -->
-    <main class="main-content">
-
-      <!-- Abas de navegacao -->
-      <nav class="tabs">
-        <button class="tab-btn active" data-tab="hardest">Hardest Levels</button>
-        <button class="tab-btn" data-tab="challenges">Challenges</button>
-        <button class="tab-btn" data-tab="events">Eventos</button>
-      </nav>
-
-      <!-- Conteudo da aba "Hardest Levels" / "Challenges" (detalhe do nivel) -->
-      <section id="levelDetail" class="level-detail">
-        <!-- Preenchido automaticamente pelo script.js -->
-      </section>
-
-      <!-- Conteudo da aba "Eventos" -->
-      <section id="eventsPanel" class="events-panel hidden">
-        <!-- Preenchido automaticamente pelo script.js -->
-      </section>
-
+        <div id="main" class="section active"></div>
+        <div id="extended" class="section"></div>
+        <div id="legacy" class="section"></div>
     </main>
 
-    <!-- ---------- COLUNA DIREITA: leaderboard ---------- -->
-    <aside class="sidebar-right">
-      <h2>Leaderboard</h2>
-      <table class="leaderboard-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Jogador</th>
-            <th>Pontos</th>
-          </tr>
-        </thead>
-        <tbody id="leaderboardBody">
-          <!-- Preenchido automaticamente pelo script.js -->
-        </tbody>
-      </table>
-    </aside>
+    <!-- CARREGANDO O BANCO DE DADOS EXTERNO -->
+    <script src="data.js"></script>
 
-  </div>
+    <script>
+        let currentTab = 'main';
 
-  <footer class="site-footer">
-    <p>GeoBR Demon List &copy; 2026 - Feito para a comunidade brasileira de Geometry Dash.</p>
-  </footer>
+        function renderLevels(list, containerId) {
+            const container = document.getElementById(containerId);
+            container.innerHTML = '';
 
-  <!-- ===================== SCRIPTS ===================== -->
-  <!-- IMPORTANTE: data.js precisa vir ANTES de script.js -->
-  <script src="data.js"></script>
-  <script src="script.js"></script>
+            if (!list || list.length === 0) {
+                container.innerHTML = '<p style="text-align:center; color: var(--text-muted); margin-top: 20px;">Nenhum level nesta lista no momento.</p>';
+                return;
+            }
+
+            list.forEach(lvl => {
+                const card = document.createElement('div');
+                card.className = 'level-card';
+                card.innerHTML = `
+                    <div class="thumb-container">
+                        ${lvl.thumb ? `<img src="${lvl.thumb}" alt="${lvl.name}">` : '<span class="no-thumb">SEM THUMBNAIL</span>'}
+                    </div>
+                    <div class="level-details">
+                        <div class="level-title">#${lvl.rank} – ${lvl.name}</div>
+                        <div class="level-author">published by <strong>${lvl.publisher}</strong></div>
+                        <div class="level-points">${lvl.points} points</div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function filterLevels() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const filtered = DEMON_LIST[currentTab].filter(l => 
+                l.name.toLowerCase().includes(query) || l.publisher.toLowerCase().includes(query)
+            );
+            renderLevels(filtered, currentTab);
+        }
+
+        function switchTab(tabId, btn) {
+            currentTab = tabId;
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+            
+            document.getElementById(tabId).classList.add('active');
+            btn.classList.add('active');
+
+            document.getElementById('searchInput').value = '';
+            renderLevels(DEMON_LIST[tabId], tabId);
+        }
+
+        // Renderiza a Main List ao abrir o site
+        renderLevels(DEMON_LIST.main, 'main');
+    </script>
 </body>
 </html>
