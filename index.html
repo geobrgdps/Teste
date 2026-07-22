@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>GeoBR Demon List</title>
+
+  <!-- Estilo do site (arquivo separado, fácil de editar) -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ===================== CABEÇALHO ===================== -->
+  <header class="site-header">
+    <h1>Geo<span class="highlight">BR</span> Demon List</h1>
+    <p class="subtitle">A lista oficial de demons do servidor GeoBR</p>
+  </header>
+
+  <!-- ===================== LAYOUT DE 3 COLUNAS ===================== -->
+  <div class="container">
+
+    <!-- ---------- COLUNA ESQUERDA: menu rápido de níveis ---------- -->
+    <aside class="sidebar-left">
+      <h2>Niveis</h2>
+      <ul id="levelMenu" class="level-menu">
+        <!-- Preenchido automaticamente pelo script.js -->
+      </ul>
+    </aside>
+
+    <!-- ---------- COLUNA CENTRAL: abas + conteudo ---------- -->
+    <main class="main-content">
+
+      <!-- Abas de navegacao -->
+      <nav class="tabs">
+        <button class="tab-btn active" data-tab="hardest">Hardest Levels</button>
+        <button class="tab-btn" data-tab="challenges">Challenges</button>
+        <button class="tab-btn" data-tab="events">Eventos</button>
+      </nav>
+
+      <!-- Conteudo da aba "Hardest Levels" / "Challenges" (detalhe do nivel) -->
+      <section id="levelDetail" class="level-detail">
+        <!-- Preenchido automaticamente pelo script.js -->
+      </section>
+
+      <!-- Conteudo da aba "Eventos" -->
+      <section id="eventsPanel" class="events-panel hidden">
+        <!-- Preenchido automaticamente pelo script.js -->
+      </section>
+
+    </main>
+
+    <!-- ---------- COLUNA DIREITA: leaderboard ---------- -->
+    <aside class="sidebar-right">
+      <h2>Leaderboard</h2>
+      <table class="leaderboard-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Jogador</th>
+            <th>Pontos</th>
+          </tr>
+        </thead>
+        <tbody id="leaderboardBody">
+          <!-- Preenchido automaticamente pelo script.js -->
+        </tbody>
+      </table>
+    </aside>
+
+  </div>
+
+  <footer class="site-footer">
+    <p>GeoBR Demon List &copy; 2026 - Feito para a comunidade brasileira de Geometry Dash.</p>
+  </footer>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <!-- IMPORTANTE: data.js precisa vir ANTES de script.js -->
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
